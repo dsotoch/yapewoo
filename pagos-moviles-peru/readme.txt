@@ -10,7 +10,7 @@ Requires at least: 5.5
 Tested up to: 5.7
 Requires PHP: 5.4
 Stable tag: 1.1
-Version: 1.2
+Version: 1.4
 License: GPLv2
 
 Es un Plugin que permite agregar YAPE como forma de pago en tu tienda WooCommerce, YAPE es un medio de pago peruano.

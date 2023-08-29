@@ -46,6 +46,8 @@ class PagoMovilesPeru
 			venta TEXT NOT NULL,
 			pagador TEXT NOT NULL,
 			monto TEXT NOT NULL,
+			fecha DATE NOT NULL,
+			estado TEXT NOT NULL,
 			created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY (id)
 		  ) $charset_collate";

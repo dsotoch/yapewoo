@@ -5,8 +5,11 @@ function mi_controlador_personalizado() {
 
            try {
             global $wpdb;
+            // Configurar la zona horaria a América/Lima
+            date_default_timezone_set('America/Lima');
 
-            $data = $wpdb->get_row("SELECT pagador, venta FROM " . $wpdb->prefix . "pago_yape ORDER BY id DESC LIMIT 1");
+            // Obtener la fecha y hora actual en la zona horaria de América/Lima
+            $fechaActual = date('Y-m-d');
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $postData = file_get_contents('php://input');
                 // Decodificar el contenido JSON en un array asociativo
@@ -18,11 +21,31 @@ function mi_controlador_personalizado() {
                     if(!$title==="CONFIRMACIONDEPAGO"){
                         return false;
                     }else{
+                        $query = $wpdb->prepare(
+                            "SELECT pagador, venta, fecha, estado FROM {$wpdb->prefix}pago_yape WHERE fecha = %s AND estado = 'PENDIENTE' ORDER BY id DESC LIMIT 1",
+                            $fechaActual
+                        );
+                        
+    
+                        $data = $wpdb->get_row($query);
+                       if($data!=null){
                         $order = wc_get_order( $data->venta );
                         if($monto==$order->get_total()){
             
                             if ($order) {
+                                $updated_data = array(
+                                    'estado' => 'COMPLETADO'
+                                );
                                 
+                                $where = array(
+                                    'id' => $data->id // Supongo que el campo id es la clave primaria de tu tabla
+                                );
+                                
+                                $result = $wpdb->update(
+                                    "{$wpdb->prefix}pago_yape",
+                                    $updated_data,
+                                    $where
+                                );
                                 $order->update_status( 'completed' );
                                 // Realiza otras acciones o devuélve una respuesta si es necesario
                                 $response = array(
@@ -45,6 +68,7 @@ function mi_controlador_personalizado() {
                         }else{
                             $order->add_order_note($yapero . ' Error en la verificación del monto---MONTO DE COMPRA INCOMPLETO!!', true);
                         }
+                       }
 
                     }
                 }

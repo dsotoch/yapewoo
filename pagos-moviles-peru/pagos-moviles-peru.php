@@ -40,6 +40,10 @@ add_action( 'plugins_loaded', 'pago_moviles_peru_init_gateway_class' );
 function pago_moviles_peru_init_gateway_class() {
     class PagoMovilesPeru_Gateway extends WC_Payment_Gateway
     {
+        date_default_timezone_set('America/Lima');
+
+            // Obtener la fecha y hora actual en la zona horaria de América/Lima
+            $fechaActual = date('Y-m-d');
         const ID = 1;
         public $domain;
     
@@ -100,7 +104,7 @@ function pago_moviles_peru_init_gateway_class() {
                     'title'       => __( 'Instructions', 'pagos-moviles-peru' ),
                     'type'        => 'text',
                     'description' => __( 'A short instruction to show at the bottom of the QR code', 'pagos-moviles-peru' ),
-                    'default'     => 'Escanea este código QR para realizar el pago a través de Yape ,proporciona los Nombres & Apellidos completos del titular de donde realizas el yapeo... Luego de  Realizar el Pedido el Sistema validara tu pago',
+                    'default'     => 'Escanea este código QR para realizar el pago a través de Yape ,proporciona los Nombres & Apellidos completos del titular de donde realizas el yapeo... Luego de  Realizar el Pedido el Sistema validara tu pago..Solo tienes un Maximo de 5 minutos para Realizar el Pago',
                     'desc_tip'    => false,
                 ),
                 'phone' => array(
@@ -256,6 +260,8 @@ function pago_moviles_peru_init_gateway_class() {
             'venta'=>$order_id,
             'pagador'=>$pagador,
             'monto'=>$order->get_total(),
+            'fecha'=>$fechaActual 
+            'estado'=>"PENDIENTE"
             );
             $wpdb->insert(
                 YAPE_VIRUTEC,
