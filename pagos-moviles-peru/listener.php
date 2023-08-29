@@ -1,14 +1,15 @@
 <?php
+date_default_timezone_set('America/Lima');
+
 global $wpdb;
+
 // Crear un controlador personalizado para escuchar una URL
 function mi_controlador_personalizado() {
 
            try {
             global $wpdb;
             // Configurar la zona horaria a América/Lima
-            date_default_timezone_set('America/Lima');
 
-            $fechaActual = date('Y-m-d');
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $postData = file_get_contents('php://input');
                 // Decodificar el contenido JSON en un array asociativo
@@ -22,7 +23,7 @@ function mi_controlador_personalizado() {
                     }else{
                         $query = $wpdb->prepare(
                             "SELECT pagador, venta, fecha, estado FROM {$wpdb->prefix}pago_yape WHERE fecha = %s AND estado = 'PENDIENTE' AND pagador = %s ORDER BY id DESC LIMIT 1",
-                            $fechaActual,
+                            date('Y-m-d'),
                             $yapero
                         );
                         $data = $wpdb->get_row($query);

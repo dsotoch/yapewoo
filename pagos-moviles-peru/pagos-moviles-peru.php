@@ -42,8 +42,7 @@ function pago_moviles_peru_init_gateway_class() {
     class PagoMovilesPeru_Gateway extends WC_Payment_Gateway
     {
 
-            // Obtener la fecha y hora actual en la zona horaria de América/Lima
-            $fechaActual = date('Y-m-d');
+        
         const ID = 1;
         public $domain;
     
@@ -260,7 +259,7 @@ function pago_moviles_peru_init_gateway_class() {
             'venta'=>$order_id,
             'pagador'=>$pagador,
             'monto'=>$order->get_total(),
-            'fecha'=>$fechaActual 
+            'fecha'=>date('Y-m-d'),
             'estado'=>"PENDIENTE"
             );
             $wpdb->insert(
