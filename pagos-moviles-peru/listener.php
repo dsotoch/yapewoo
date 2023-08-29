@@ -8,7 +8,6 @@ function mi_controlador_personalizado() {
             // Configurar la zona horaria a América/Lima
             date_default_timezone_set('America/Lima');
 
-            // Obtener la fecha y hora actual en la zona horaria de América/Lima
             $fechaActual = date('Y-m-d');
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $postData = file_get_contents('php://input');
@@ -25,8 +24,6 @@ function mi_controlador_personalizado() {
                             "SELECT pagador, venta, fecha, estado FROM {$wpdb->prefix}pago_yape WHERE fecha = %s AND estado = 'PENDIENTE' ORDER BY id DESC LIMIT 1",
                             $fechaActual
                         );
-                        
-    
                         $data = $wpdb->get_row($query);
                        if($data!=null){
                         $order = wc_get_order( $data->venta );
