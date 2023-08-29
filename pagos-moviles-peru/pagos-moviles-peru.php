@@ -17,6 +17,7 @@ if (! is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 if (!defined('ABSPATH') && !in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins')))) {
     exit;
 }
+date_default_timezone_set('America/Lima');
 
 global $wpdb;
 
@@ -40,7 +41,6 @@ add_action( 'plugins_loaded', 'pago_moviles_peru_init_gateway_class' );
 function pago_moviles_peru_init_gateway_class() {
     class PagoMovilesPeru_Gateway extends WC_Payment_Gateway
     {
-        date_default_timezone_set('America/Lima');
 
             // Obtener la fecha y hora actual en la zona horaria de América/Lima
             $fechaActual = date('Y-m-d');
