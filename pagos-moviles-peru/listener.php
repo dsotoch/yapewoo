@@ -19,7 +19,7 @@ function mi_controlador_personalizado() {
                     $yapero = $datas['yapero'];
                     $monto = $datas['monto'];
                     $montoDouble = floatval($monto);
-                    if(!$title==="CONFIRMACIONDEPAGO"){
+                    if($title!=="CONFIRMACIONDEPAGO"){
                         return false;
                     }else{
                         $query = $wpdb->prepare(
