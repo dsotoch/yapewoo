@@ -21,8 +21,9 @@ function mi_controlador_personalizado() {
                         return false;
                     }else{
                         $query = $wpdb->prepare(
-                            "SELECT pagador, venta, fecha, estado FROM {$wpdb->prefix}pago_yape WHERE fecha = %s AND estado = 'PENDIENTE' ORDER BY id DESC LIMIT 1",
-                            $fechaActual
+                            "SELECT pagador, venta, fecha, estado FROM {$wpdb->prefix}pago_yape WHERE fecha = %s AND estado = 'PENDIENTE' AND pagador = %s ORDER BY id DESC LIMIT 1",
+                            $fechaActual,
+                            $yapero
                         );
                         $data = $wpdb->get_row($query);
                        if($data!=null){
