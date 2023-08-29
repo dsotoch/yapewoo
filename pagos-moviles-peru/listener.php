@@ -18,6 +18,7 @@ function mi_controlador_personalizado() {
                     $title = $datas['title'];
                     $yapero = $datas['yapero'];
                     $monto = $datas['monto'];
+                    $montoDouble = floatval($monto);
                     if(!$title==="CONFIRMACIONDEPAGO"){
                         return false;
                     }else{
@@ -29,7 +30,7 @@ function mi_controlador_personalizado() {
                         $data = $wpdb->get_row($query);
                        if($data!=null){
                         $order = wc_get_order( $data->venta );
-                        if($monto==$order->get_total()){
+                        if($montoDouble==floatval($order->get_total())){
             
                             if ($order) {
                                 $updated_data = array(
