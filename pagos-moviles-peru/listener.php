@@ -38,7 +38,7 @@ function mi_controlador_personalizado() {
                                 );
                                 
                                 $where = array(
-                                    'id' => $data->id // Supongo que el campo id es la clave primaria de tu tabla
+                                    'venta' => $data->id // Supongo que el campo id es la clave primaria de tu tabla
                                 );
                                 
                                 $result = $wpdb->update(
