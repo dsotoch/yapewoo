@@ -246,7 +246,7 @@ function pago_moviles_peru_init_gateway_class() {
             global $woocommerce;
             global $wpdb;
             $order = wc_get_order( $order_id );
-            $order->update_status( 'processing' );
+            $order->update_status( 'pending' );
             $order->reduce_order_stock();
             $woocommerce->cart->empty_cart();
             
