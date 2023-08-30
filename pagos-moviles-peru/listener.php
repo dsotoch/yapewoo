@@ -19,7 +19,7 @@ function mi_controlador_personalizado() {
                     $yapero = $datas['yapero'];
                     $monto = $datas['monto'];
                     $montoDouble = floatval($monto);
-                    if($title!=="CONFIRMACIONDEPAGO"){
+                    if($title!="CONFIRMACIONDEPAGO"){
                         return false;
                     }else{
                         $query = $wpdb->prepare(
@@ -36,10 +36,10 @@ function mi_controlador_personalizado() {
                                 $updated_data = array(
                                     'estado' => 'COMPLETADO'
                                 );
-                                
                                 $where = array(
-                                    'venta' => $order->get_order_number();
+                                    'venta' => $order->get_order_number()
                                 );
+                               
                                 
                                 $result = $wpdb->update($wpdb->prefix.'pago_yape', $updated_data, $where);
                                 if($result!=false){
