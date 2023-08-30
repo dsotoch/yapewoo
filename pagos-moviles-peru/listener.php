@@ -38,22 +38,28 @@ function mi_controlador_personalizado() {
                                 );
                                 
                                 $where = array(
-                                    'venta' => $data->id // Supongo que el campo id es la clave primaria de tu tabla
+                                    'venta' => $order->get_order_number();
                                 );
                                 
-                                $result = $wpdb->update(
-                                    "{$wpdb->prefix}pago_yape",
-                                    $updated_data,
-                                    $where
-                                );
-                                $order->update_status( 'completed' );
-                                // Realiza otras acciones o devuélve una respuesta si es necesario
-                                $response = array(
-                                'message' => 'Estado del pedido Completado'
-                                );
-                    
-                                // Devuelve una respuesta en formato JSON
-                                wp_send_json($response);
+                                $result = $wpdb->update($wpdb->prefix.'pago_yape', $updated_data, $where);
+                                if($result!=false){
+                                    $order->update_status( 'completed' );
+                                    // Realiza otras acciones o devuélve una respuesta si es necesario
+                                    $response = array(
+                                    'message' => 'Estado del pedido Completado'
+                                    );
+                        
+                                    // Devuelve una respuesta en formato JSON
+                                    wp_send_json($response);
+                                }else{
+                                    $response = array(
+                                        'message' => 'No se ha cambiado el estado en BD'
+                                        );
+                            
+                                        // Devuelve una respuesta en formato JSON
+                                        wp_send_json($response);
+                                }
+                               
                             }else{
                 
                             // Realiza otras acciones o devuélve una respuesta si es necesario
